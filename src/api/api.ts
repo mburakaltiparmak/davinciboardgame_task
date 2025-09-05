@@ -1,7 +1,8 @@
-import { Post, User } from "../components/Users";
+import { Post } from "../types/post.types";
+import { UserType } from "../types/user.types";
 
 // GET request 
-export const fetchData = async (endpoint : string): Promise<User[] | Post[]> => {
+export const fetchData = async (endpoint : string): Promise<UserType[] | Post[]> => {
   try {
     const response = await fetch(`https://jsonplaceholder.typicode.com/${endpoint}`);
     if (!response.ok) {
@@ -16,7 +17,7 @@ export const fetchData = async (endpoint : string): Promise<User[] | Post[]> => 
 };
 
 // POST request
-export const postData = async (endpoint : string, payload : User | Post) => {
+export const postData = async (endpoint : string, payload : UserType | Post) => {
   try {
     const response = await fetch(`https://jsonplaceholder.typicode.com/${endpoint}`, {
       method: 'POST',
@@ -51,7 +52,7 @@ export const deleteData = async (endpoint : string, id : number) => {
   }
 };
 // PUT request
-export const updateData = async (endpoint : string, id : number, payload : User | Post) => {
+export const updateData = async (endpoint : string, id : number, payload : UserType | Post) => {
   try {
     const response = await fetch(`https://jsonplaceholder.typicode.com/${endpoint}/${id}`, {
       method: 'PUT',

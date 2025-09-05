@@ -1,40 +1,12 @@
 import { useEffect, useState } from 'react';
 import { fetchData } from '../api/api.ts';
 import { User } from 'lucide-react';
+import { UserType } from '../types/user.types.ts';
+import { Post } from '../types/post.types.ts';
 
-export interface Post {
-  userId: number;
-  id: number;
-  title: string;
-  body: string;
-}
-
-export interface User {
-  id: number;
-  name: string;
-  username: string;
-  email: string;
-  address: {
-    street: string;
-    suite: string;
-    city: string;
-    zipcode: string;
-    geo: {
-      lat: string;
-      lng: string;
-    };
-  };
-  phone: string;
-  website: string;
-  company: {
-    name: string;
-    catchPhrase: string;
-    bs: string;
-  };
-}
 
 const Users = () => {
-  const [users, setUsers] = useState<User[]>([]);
+  const [users, setUsers] = useState<UserType[]>([]);
   const [posts, setPosts] = useState<Post[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [expandedPosts, setExpandedPosts] = useState<{ [key: number]: boolean }>({});
@@ -47,7 +19,7 @@ const Users = () => {
           fetchData('users'),
           fetchData('posts')
         ]);
-        setUsers(usersData as User[]);
+        setUsers(usersData as UserType[]);
         setPosts(postsData as Post[]);
       } catch (error) {
         console.error('Veri çekme hatası:', error);
