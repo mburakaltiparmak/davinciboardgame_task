@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { fetchData } from '../api/api.js';
+import { useEffect, useState } from 'react';
+import { fetchData } from '../api/api.ts';
 import { User } from 'lucide-react';
 
-interface Post {
+export interface Post {
   userId: number;
   id: number;
   title: string;
   body: string;
 }
 
-interface User {
+export interface User {
   id: number;
   name: string;
   username: string;
@@ -47,8 +47,8 @@ const Users = () => {
           fetchData('users'),
           fetchData('posts')
         ]);
-        setUsers(usersData);
-        setPosts(postsData);
+        setUsers(usersData as User[]);
+        setPosts(postsData as Post[]);
       } catch (error) {
         console.error('Veri çekme hatası:', error);
       }
