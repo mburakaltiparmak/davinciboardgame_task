@@ -21,12 +21,16 @@ const Body: React.FC = () => {
             I'm applying to Front End Developer position and this is the Phase 1 task.
           </p>
 
-          <div className='flex flex-row items-center justify-between gap-4 max-w-3xl mx-auto'>
-            <Users /> 
-            <Posts />
-          </div>
+        
+          {/* Kullanıcılar Bölümü */}
+          <section>
+            <Users />
+          </section>
+
+         
         </div>
-      </div>
+        </div>
+      
     </main>
   );
 };
