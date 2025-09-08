@@ -1,3 +1,5 @@
+import { Post } from "./post.types";
+
 export interface UserType {
   id: number;
   name: string;
@@ -20,4 +22,24 @@ export interface UserType {
     catchPhrase: string;
     bs: string;
   };
+}
+
+export interface UserContactInfoProps {
+  user: UserType;
+  isEditing: boolean;
+  editedUser: UserType | null;
+  onInputChange: (field: string, value: string, nestedField?: string, subField?: string) => void;
+}
+
+export interface UserPostsListProps {
+  user: UserType;
+  userPosts: Post[];
+}
+
+export interface UserProfileHeaderProps {
+  user: UserType;
+  userPostsCount: number;
+  isEditing: boolean;
+  editedUser: UserType | null;
+  onInputChange: (field: string, value: string, nestedField?: string, subField?: string) => void;
 }
