@@ -89,8 +89,9 @@ const Users = () => {
                 <User className="w-16 h-16 text-gray-400 " />
                     </div>
               <div className="flex flex-col items-start justify-between mb-4 ">   
-                  <h3 className="text-xl font-bold text-gray-900 mb-1">{user.name}</h3>
+                  <h3 className="text-base font-bold text-gray-900">{user.name}</h3>
                   <p className="text-gray-600 text-sm">@{user.username}</p>
+                  <p className="text-gray-600 text-sm">Id : {user.id}</p>
               </div>
                 </div>
 
@@ -100,31 +101,18 @@ const Users = () => {
                   <p className="text-sm text-gray-600">
                     <span className="font-medium">Email:</span> <a href={`mailto:${user.email}`} className='text-blue-600 hover:underline'>{user.email.toLowerCase()}</a>
                   </p>
-                  <p className="text-sm text-gray-600">
-                    <span className="font-medium">Mobile:</span> <a href={`tel:${user.phone}`} className='text-blue-600 hover:underline'>{user.phone}</a>
-                  </p>
-                  <span className="text-sm text-gray-600">
-                    <span className="font-medium">Website:</span> <a className='text-blue-600 hover:underline' href={`https://${user.website}`} target="_blank" rel="noopener noreferrer">{user.website}</a>
-                  </span>
-                  <p className="text-sm text-gray-600">
-                    <span className="font-medium">Company:</span> {user.company.name}
-                  </p>
-                  <p className="text-sm text-gray-600">
-                    <span className="font-medium">City:</span> {user.address.city}
-                  </p>
-                  
                 </div>
                
               </div>
 
               {/* Kullanıcının Postları */}
-              <div>
+              <div className='flex flex-col items-start w-full'>
                 <h4 className="text-lg font-semibold text-gray-800 mb-3">
                   Posts ({userPosts.length})
                 </h4>
                 
                 {postsToShow.length > 0 ? (
-                  <div className="flex flex-col items-center w-52">
+                  <div className="flex flex-col items-start  w-full gap-2 text-left">
                     {postsToShow.map((post) => (
                       <div
                         key={post.id}
@@ -134,6 +122,8 @@ const Users = () => {
                         <h5 className="text-sm font-medium text-gray-900 hover:text-blue-600 leading-relaxed line-clamp-1">
                           {post.title}
                         </h5>
+                        <p className="text-gray-600 text-sm">User Id : {post.userId}</p>
+                        <p className="text-gray-600 text-sm">Post Id : {post.id}</p>
                       </div>
                     ))}
                   </div>
