@@ -1,15 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { FileText, User, Save, X } from 'lucide-react';
 import Modal from '../common/Modal';
-import { Post } from '../../types/post.types';
+import { CreatePostModalProps, Post } from '../../types/post.types';
 import { UserType } from '../../types/user.types';
 import { postData, fetchData } from '../../api/api';
-
-interface CreatePostModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onPostCreated: (post: Post) => void;
-}
 
 const CreatePostModal: React.FC<CreatePostModalProps> = ({
   isOpen,

@@ -31,3 +31,38 @@ export interface RelatedPostsProps {
   posts: Post[];
   author: UserType | null;
 }
+export interface PostCardProps {
+  post: Post;
+  user: UserType | undefined;
+  isExpanded: boolean;
+  onToggleExpansion: (postId: number) => void;
+  onDelete: (postId: number) => void;
+}
+
+export interface PostsGridProps {
+  posts: Post[];
+  users: UserType[];
+  loading: boolean;
+  expandedPosts: { [key: number]: boolean };
+  searchTerm: string;
+  selectedUserId: string;
+  onToggleExpansion: (postId: number) => void;
+  onDeletePost: (postId: number) => void;
+  onResetFilters: () => void;
+}
+
+export interface PostsFiltersProps {
+  searchTerm: string;
+  selectedUserId: string;
+  users: UserType[];
+  filteredPostsCount: number;
+  onSearchChange: (value: string) => void;
+  onUserFilterChange: (value: string) => void;
+  onResetFilters: () => void;
+}
+
+export interface CreatePostModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onPostCreated: (post: Post) => void;
+}

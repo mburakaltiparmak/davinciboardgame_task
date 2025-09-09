@@ -8,6 +8,8 @@ import UserProfileHeader from '../components/userDetail/UserProfileHeader';
 import UserContactInfo from '../components/userDetail/UserContactInfo';
 import UserPostsList from '../components/userDetail/UserPostsList';
 import DeleteConfirmModal from '../components/common/DeleteConfirmModal';
+
+
 const UsersDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -194,10 +196,11 @@ const UsersDetailPage: React.FC = () => {
               <>
                 <button
                   onClick={handleSaveEdit}
-                  className="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200"
+                  disabled={loading}
+                  className="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200 disabled:opacity-50"
                 >
                   <Save className="w-4 h-4 mr-2" />
-                  Save Changes
+                  {loading ? 'Saving...' : 'Save Changes'}
                 </button>
                 <button
                   onClick={handleCancelEdit}

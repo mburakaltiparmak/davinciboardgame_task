@@ -1,14 +1,8 @@
 import React, { useState } from 'react';
 import { User, Mail, Phone, MapPin, Building, Globe, Save, X } from 'lucide-react';
 import Modal from '../common/Modal';
-import { UserType } from '../../types/user.types';
+import { CreateUserModalProps, UserType } from '../../types/user.types';
 import { postData } from '../../api/api';
-
-interface CreateUserModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onUserCreated: (user: UserType) => void;
-}
 
 const CreateUserModal: React.FC<CreateUserModalProps> = ({
   isOpen,
@@ -61,24 +55,42 @@ const CreateUserModal: React.FC<CreateUserModalProps> = ({
     setFormData(prev => {
       if (nestedField) {
         if (subField) {
-          return {
-            ...prev,
-            [field]: {
-              ...prev[field as keyof typeof prev],
-              [nestedField]: {
-                ...(prev[field as keyof typeof prev] as any)[nestedField],
-                [subField]: value
+          // For deeply nested fields (e.g., address.geo.lat)
+          if (field === 'address' && nestedField === 'geo') {
+            return {
+              ...prev,
+              address: {
+                ...prev.address,
+                geo: {
+                  ...prev.address.geo,
+                  [subField]: value
+                }
               }
-            }
-          };
+            };
+          }
+          // Add similar logic if you have other deeply nested fields
+          return prev;
         } else {
-          return {
-            ...prev,
-            [field]: {
-              ...prev[field as keyof typeof prev],
-              [nestedField]: value
-            }
-          };
+          // For one-level nested fields (e.g., address.street, company.name)
+          if (field === 'address') {
+            return {
+              ...prev,
+              address: {
+                ...prev.address,
+                [nestedField]: value
+              }
+            };
+          }
+          if (field === 'company') {
+            return {
+              ...prev,
+              company: {
+                ...prev.company,
+                [nestedField]: value
+              }
+            };
+          }
+          return prev;
         }
       } else {
         return {
