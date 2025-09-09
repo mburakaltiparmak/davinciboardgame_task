@@ -18,6 +18,7 @@ const PostsDetailPage: React.FC = () => {
   const [author, setAuthor] = useState<UserType | null>(null);
   const [allPosts, setAllPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
+  const [actionLoading, setActionLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editedPost, setEditedPost] = useState<Post | null>(null);
   const [deleteConfirm, setDeleteConfirm] = useState(false);
@@ -68,23 +69,29 @@ const PostsDetailPage: React.FC = () => {
   const handleSaveEdit = async () => {
     if (!editedPost || !id) return;
 
+    setActionLoading(true);
     try {
       const updatedPost = await updateData('posts', parseInt(id), editedPost);
       setPost(updatedPost);
       setIsEditing(false);
     } catch (error) {
       console.error('Error updating post:', error);
+    } finally {
+      setActionLoading(false);
     }
   };
 
   const handleDelete = async () => {
     if (!id) return;
 
+    setActionLoading(true);
     try {
       await deleteData('posts', parseInt(id));
       navigate('/posts');
     } catch (error) {
       console.error('Error deleting post:', error);
+    } finally {
+      setActionLoading(false);
     }
   };
 
@@ -234,7 +241,7 @@ const PostsDetailPage: React.FC = () => {
         message={`Are you sure you want to delete <strong>"${post.title}"</strong>? This action cannot be undone.`}
         onConfirm={handleDelete}
         onCancel={() => setDeleteConfirm(false)}
-        confirmText="Delete Post"
+        confirmText={actionLoading ? "Deleting..." : "Delete Post"}
       />
     </div>
   );

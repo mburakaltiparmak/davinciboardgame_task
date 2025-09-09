@@ -1,12 +1,21 @@
 import React from 'react';
-import { UserProfileHeaderProps } from '../../types/user.types';
+import { Controller, Control, FieldErrors } from 'react-hook-form';
+import { UserType } from '../../types/user.types';
+
+interface UserProfileHeaderProps {
+  user: UserType;
+  userPostsCount: number;
+  isEditing: boolean;
+  control?: Control<UserType>;
+  errors?: FieldErrors<UserType>;
+}
 
 const UserProfileHeader: React.FC<UserProfileHeaderProps> = ({
   user,
   userPostsCount,
   isEditing,
-  editedUser,
-  onInputChange
+  control,
+  errors
 }) => {
   return (
     <div className="bg-gradient-to-r from-blue-500 to-purple-600 px-8 py-12">
@@ -17,21 +26,48 @@ const UserProfileHeader: React.FC<UserProfileHeaderProps> = ({
           </span>
         </div>
         <div className="text-white">
-          {isEditing ? (
+          {isEditing && control ? (
             <div className="space-y-3">
-              <input
-                type="text"
-                value={editedUser?.name || ''}
-                onChange={(e) => onInputChange('name', e.target.value)}
-                className="text-2xl font-bold bg-white bg-opacity-20 rounded-lg px-3 py-2 text-white placeholder-white placeholder-opacity-70 border border-white border-opacity-30"
-                placeholder="Full Name"
+              {/* Name Field */}
+              <Controller
+                name="name"
+                control={control}
+                render={({ field }) => (
+                  <div>
+                    <input
+                      {...field}
+                      type="text"
+                      className={`text-2xl font-bold bg-white bg-opacity-20 rounded-lg px-3 py-2 text-white placeholder-white placeholder-opacity-70 border ${
+                        errors?.name ? 'border-red-300' : 'border-white border-opacity-30'
+                      }`}
+                      placeholder="Full Name"
+                    />
+                    {errors?.name && (
+                      <p className="text-red-200 text-sm mt-1">{errors.name.message}</p>
+                    )}
+                  </div>
+                )}
               />
-              <input
-                type="text"
-                value={editedUser?.username || ''}
-                onChange={(e) => onInputChange('username', e.target.value)}
-                className="text-lg bg-white bg-opacity-20 rounded-lg px-3 py-2 text-white placeholder-white placeholder-opacity-70 border border-white border-opacity-30"
-                placeholder="Username"
+
+              {/* Username Field */}
+              <Controller
+                name="username"
+                control={control}
+                render={({ field }) => (
+                  <div>
+                    <input
+                      {...field}
+                      type="text"
+                      className={`text-lg bg-white bg-opacity-20 rounded-lg px-3 py-2 text-white placeholder-white placeholder-opacity-70 border ${
+                        errors?.username ? 'border-red-300' : 'border-white border-opacity-30'
+                      }`}
+                      placeholder="Username"
+                    />
+                    {errors?.username && (
+                      <p className="text-red-200 text-sm mt-1">{errors.username.message}</p>
+                    )}
+                  </div>
+                )}
               />
             </div>
           ) : (

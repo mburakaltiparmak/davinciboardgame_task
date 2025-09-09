@@ -1,4 +1,5 @@
 import { Post } from "./post.types";
+import { Control, FieldErrors } from 'react-hook-form';
 
 export interface UserType {
   id: number;
@@ -31,6 +32,14 @@ export interface UserContactInfoProps {
   onInputChange: (field: string, value: string, nestedField?: string, subField?: string) => void;
 }
 
+// Updated props for React Hook Form components
+export interface UserContactInfoWithFormProps {
+  user: UserType;
+  isEditing: boolean;
+  control: Control<UserType>;
+  errors: FieldErrors<UserType>;
+}
+
 export interface UserPostsListProps {
   user: UserType;
   userPosts: Post[];
@@ -40,8 +49,8 @@ export interface UserProfileHeaderProps {
   user: UserType;
   userPostsCount: number;
   isEditing: boolean;
-  editedUser: UserType | null;
-  onInputChange: (field: string, value: string, nestedField?: string, subField?: string) => void;
+  control?: Control<UserType>;
+  errors?: FieldErrors<UserType>;
 }
 
 export interface UserCardProps {
