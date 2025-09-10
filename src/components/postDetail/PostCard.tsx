@@ -9,16 +9,25 @@ import {
   Edit, 
   Trash2 
 } from 'lucide-react';
-import { PostCardProps } from '../../types/post.types';
+import { Post } from '../../types/post.types';
+import { UserType } from '../../types/user.types';
 
-
+interface PostCardProps {
+  post: Post;
+  user: UserType | undefined;
+  isExpanded: boolean;
+  onToggleExpansion: (postId: number) => void;
+  onDelete: (postId: number) => void;
+  onEdit: (post: Post) => void;
+}
 
 const PostCard: React.FC<PostCardProps> = ({
   post,
   user,
   isExpanded,
   onToggleExpansion,
-  onDelete
+  onDelete,
+  onEdit
 }) => {
   const shouldTruncate = post.body.length > 150;
   const displayBody = isExpanded || !shouldTruncate 
@@ -98,7 +107,10 @@ const PostCard: React.FC<PostCardProps> = ({
               <Eye className="w-4 h-4 mr-1" />
               View
             </Link>
-            <button className="inline-flex items-center px-3 py-1 bg-gray-100 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-200 transition-colors duration-200">
+            <button 
+              onClick={() => onEdit(post)}
+              className="inline-flex items-center px-3 py-1 bg-gray-100 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-200 transition-colors duration-200"
+            >
               <Edit className="w-4 h-4" />
             </button>
             <button

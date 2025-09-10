@@ -1,9 +1,21 @@
 import React from 'react';
 import { FileText } from 'lucide-react';
 import PostCard from './PostCard';
-import { PostsGridProps } from '../../types/post.types';
+import { Post } from '../../types/post.types';
+import { UserType } from '../../types/user.types';
 
-
+interface PostsGridProps {
+  posts: Post[];
+  users: UserType[];
+  loading: boolean;
+  expandedPosts: { [key: number]: boolean };
+  searchTerm: string;
+  selectedUserId: string;
+  onToggleExpansion: (postId: number) => void;
+  onDeletePost: (postId: number) => void;
+  onEditPost: (post: Post) => void;
+  onResetFilters: () => void;
+}
 
 const PostsGrid: React.FC<PostsGridProps> = ({
   posts,
@@ -14,6 +26,7 @@ const PostsGrid: React.FC<PostsGridProps> = ({
   selectedUserId,
   onToggleExpansion,
   onDeletePost,
+  onEditPost,
   onResetFilters
 }) => {
   const getUser = (userId: number) => {
@@ -73,6 +86,7 @@ const PostsGrid: React.FC<PostsGridProps> = ({
           isExpanded={expandedPosts[post.id]}
           onToggleExpansion={onToggleExpansion}
           onDelete={onDeletePost}
+          onEdit={onEditPost}
         />
       ))}
     </div>

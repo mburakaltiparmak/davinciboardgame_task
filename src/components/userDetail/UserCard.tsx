@@ -10,13 +10,20 @@ import {
   Trash2,
   Eye 
 } from 'lucide-react';
-import { UserCardProps } from '../../types/user.types';
+import { UserType } from '../../types/user.types';
 
+interface UserCardProps {
+  user: UserType;
+  postsCount: number;
+  onDelete: (userId: number) => void;
+  onEdit: (user: UserType) => void;
+}
 
 const UserCard: React.FC<UserCardProps> = ({
   user,
   postsCount,
-  onDelete
+  onDelete,
+  onEdit
 }) => {
   return (
     <div className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 overflow-hidden">
@@ -74,7 +81,10 @@ const UserCard: React.FC<UserCardProps> = ({
             <Eye className="w-4 h-4 mr-1" />
             View
           </Link>
-          <button className="inline-flex items-center px-3 py-2 bg-gray-100 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-200 transition-colors duration-200">
+          <button 
+            onClick={() => onEdit(user)}
+            className="inline-flex items-center px-3 py-2 bg-gray-100 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-200 transition-colors duration-200"
+          >
             <Edit className="w-4 h-4" />
           </button>
           <button

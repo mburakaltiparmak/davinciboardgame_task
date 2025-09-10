@@ -1,3 +1,4 @@
+/* eslint-disable quotes */
 import React, { useEffect, useState } from 'react';
 import { Plus } from 'lucide-react';
 import { fetchData, deleteData } from '../api/api';
@@ -8,7 +9,7 @@ import PostsGrid from '../components/postDetail/PostsGrid';
 import Pagination from '../components/common/Pagination';
 import DeleteConfirmModal from '../components/common/DeleteConfirmModal';
 import CreatePostModal from '../components/postDetail/CreatePostModal';
-
+import EditPostModal from '../components/postDetail/EditPostModal';
 
 const PostsPage: React.FC = () => {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -20,6 +21,8 @@ const PostsPage: React.FC = () => {
   const [deleteConfirm, setDeleteConfirm] = useState<number | null>(null);
   const [expandedPosts, setExpandedPosts] = useState<{ [key: number]: boolean }>({});
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [postToEdit, setPostToEdit] = useState<Post | null>(null);
   const [actionLoading, setActionLoading] = useState(false);
   const postsPerPage = 12;
 
@@ -57,41 +60,20 @@ const PostsPage: React.FC = () => {
   const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
   const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
 
-  // Handle post creation
-  const handlePostCreated = (newPost: Post) => {
-    setPosts(prev => [newPost, ...prev]);
+  const handleSearchChange = (value: string) => {
+    setSearchTerm(value);
     setCurrentPage(1);
-    setShowCreateModal(false);
   };
 
-  // Handle delete post
-  const handleDeletePost = async (postId: number) => {
-    setActionLoading(true);
-    try {
-      await deleteData('posts', postId);
-      setPosts(prev => prev.filter(post => post.id !== postId));
-      setDeleteConfirm(null);
-      
-      // Adjust current page if needed
-      const newFilteredPosts = posts.filter(post => post.id !== postId);
-      const newTotalPages = Math.ceil(newFilteredPosts.length / postsPerPage);
-      if (currentPage > newTotalPages && newTotalPages > 0) {
-        setCurrentPage(newTotalPages);
-      }
-    } catch (error) {
-      console.error('Error deleting post:', error);
-      alert('Failed to delete post. Please try again.');
-    } finally {
-      setActionLoading(false);
-    }
+  const handleUserFilterChange = (value: string) => {
+    setSelectedUserId(value);
+    setCurrentPage(1);
   };
 
-  // Handle page change
-  const handlePageChange = (pageNumber: number) => {
-    setCurrentPage(pageNumber);
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
   };
 
-  // Toggle post expansion
   const togglePostExpansion = (postId: number) => {
     setExpandedPosts(prev => ({
       ...prev,
@@ -99,26 +81,42 @@ const PostsPage: React.FC = () => {
     }));
   };
 
-  // Handle search change
-  const handleSearchChange = (value: string) => {
-    setSearchTerm(value);
-    setCurrentPage(1);
-  };
-
-  // Handle user filter change
-  const handleUserFilterChange = (value: string) => {
-    setSelectedUserId(value);
-    setCurrentPage(1);
-  };
-
-  // Reset filters
   const resetFilters = () => {
     setSearchTerm('');
     setSelectedUserId('');
     setCurrentPage(1);
   };
 
-  // Get post to delete
+  const handleDeletePost = async (postId: number) => {
+    setActionLoading(true);
+    try {
+      await deleteData('posts', postId);
+      setPosts(posts.filter(post => post.id !== postId));
+      setDeleteConfirm(null);
+    } catch (error) {
+      console.error('Error deleting post:', error);
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
+  const handlePostCreated = (newPost: Post) => {
+    setPosts([newPost, ...posts]);
+  };
+
+  const handleEditPost = (post: Post) => {
+    setPostToEdit(post);
+    setShowEditModal(true);
+  };
+
+  const handlePostUpdated = (updatedPost: Post) => {
+    setPosts(posts.map(post => 
+      post.id === updatedPost.id ? updatedPost : post
+    ));
+    setShowEditModal(false);
+    setPostToEdit(null);
+  };
+
   const postToDelete = deleteConfirm ? posts.find(p => p.id === deleteConfirm) : null;
 
   return (
@@ -164,6 +162,7 @@ const PostsPage: React.FC = () => {
           selectedUserId={selectedUserId}
           onToggleExpansion={togglePostExpansion}
           onDeletePost={setDeleteConfirm}
+          onEditPost={handleEditPost}
           onResetFilters={resetFilters}
         />
 
@@ -195,6 +194,19 @@ const PostsPage: React.FC = () => {
         onClose={() => setShowCreateModal(false)}
         onPostCreated={handlePostCreated}
       />
+
+      {/* Edit Post Modal */}
+      {postToEdit && (
+        <EditPostModal
+          isOpen={showEditModal}
+          onClose={() => {
+            setShowEditModal(false);
+            setPostToEdit(null);
+          }}
+          post={postToEdit}
+          onPostUpdated={handlePostUpdated}
+        />
+      )}
     </div>
   );
 };

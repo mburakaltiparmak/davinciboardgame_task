@@ -1,3 +1,4 @@
+/* eslint-disable quotes */
 import React, { useEffect, useState } from 'react';
 import { fetchData, deleteData } from '../api/api';
 import { UserType } from '../types/user.types';
@@ -8,7 +9,7 @@ import UsersGrid from '../components/userDetail/UsersGrid';
 import Pagination from '../components/common/Pagination';
 import DeleteConfirmModal from '../components/common/DeleteConfirmModal';
 import CreateUserModal from '../components/userDetail/CreateUserModal';
-
+import EditUserModal from '../components/userDetail/EditUserModal';
 
 const UsersPage: React.FC = () => {
   const [users, setUsers] = useState<UserType[]>([]);
@@ -18,6 +19,8 @@ const UsersPage: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [deleteConfirm, setDeleteConfirm] = useState<number | null>(null);
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [userToEdit, setUserToEdit] = useState<UserType | null>(null);
   const [actionLoading, setActionLoading] = useState(false);
   const usersPerPage = 6;
 
@@ -54,59 +57,57 @@ const UsersPage: React.FC = () => {
   const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
   const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
 
-  // Handle user creation
-  const handleUserCreated = (newUser: UserType) => {
-    setUsers(prev => [newUser, ...prev]);
-    setCurrentPage(1);
-    setShowCreateModal(false);
-  };
-
-  // Handle delete user
-  const handleDeleteUser = async (userId: number) => {
-    setActionLoading(true);
-    try {
-      await deleteData('users', userId);
-      setUsers(prev => prev.filter(user => user.id !== userId));
-      setDeleteConfirm(null);
-      
-      // Adjust current page if needed
-      const newFilteredUsers = users.filter(user => user.id !== userId);
-      const newTotalPages = Math.ceil(newFilteredUsers.length / usersPerPage);
-      if (currentPage > newTotalPages && newTotalPages > 0) {
-        setCurrentPage(newTotalPages);
-      }
-    } catch (error) {
-      console.error('Error deleting user:', error);
-      alert('Failed to delete user. Please try again.');
-    } finally {
-      setActionLoading(false);
-    }
-  };
-
-  // Handle page change
-  const handlePageChange = (pageNumber: number) => {
-    setCurrentPage(pageNumber);
-  };
-
-  // Handle search change
   const handleSearchChange = (value: string) => {
     setSearchTerm(value);
     setCurrentPage(1);
   };
 
-  // Get user to delete
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  const handleDeleteUser = async (userId: number) => {
+    setActionLoading(true);
+    try {
+      await deleteData('users', userId);
+      setUsers(users.filter(user => user.id !== userId));
+      setDeleteConfirm(null);
+    } catch (error) {
+      console.error('Error deleting user:', error);
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
+  const handleUserCreated = (newUser: UserType) => {
+    setUsers([...users, newUser]);
+  };
+
+  const handleEditUser = (user: UserType) => {
+    setUserToEdit(user);
+    setShowEditModal(true);
+  };
+
+  const handleUserUpdated = (updatedUser: UserType) => {
+    setUsers(users.map(user => 
+      user.id === updatedUser.id ? updatedUser : user
+    ));
+    setShowEditModal(false);
+    setUserToEdit(null);
+  };
+
   const userToDelete = deleteConfirm ? users.find(u => u.id === deleteConfirm) : null;
 
   return (
     <div className="bg-gradient-to-br from-gray-50 to-blue-50 min-h-screen py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <UsersHeader
-          totalUsers={filteredUsers.length}
-          onCreateUser={() => setShowCreateModal(true)}
+        <UsersHeader 
+          totalUsers={filteredUsers.length} 
+          onCreateUser={() => setShowCreateModal(true)} 
         />
 
-        {/* Search and Filters */}
+        {/* Search */}
         <UsersFilters
           searchTerm={searchTerm}
           filteredUsersCount={filteredUsers.length}
@@ -120,6 +121,7 @@ const UsersPage: React.FC = () => {
           loading={loading}
           searchTerm={searchTerm}
           onDeleteUser={setDeleteConfirm}
+          onEditUser={handleEditUser}
         />
 
         {/* Pagination */}
@@ -150,6 +152,19 @@ const UsersPage: React.FC = () => {
         onClose={() => setShowCreateModal(false)}
         onUserCreated={handleUserCreated}
       />
+
+      {/* Edit User Modal */}
+      {userToEdit && (
+        <EditUserModal
+          isOpen={showEditModal}
+          onClose={() => {
+            setShowEditModal(false);
+            setUserToEdit(null);
+          }}
+          user={userToEdit}
+          onUserUpdated={handleUserUpdated}
+        />
+      )}
     </div>
   );
 };

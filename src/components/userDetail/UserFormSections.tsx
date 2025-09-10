@@ -51,7 +51,6 @@ export const PersonalInfoSection: React.FC<UserFormSectionsProps> = ({
       placeholder="+1-234-567-8900"
       icon={<Phone className="w-4 h-4" />}
       error={errors.phone}
-      required
     />
     
     <FormField
@@ -112,16 +111,16 @@ export const AddressSection: React.FC<UserFormSectionsProps> = ({
       <FormField
         name="address.geo.lat"
         control={control}
-        label="Latitude"
-        placeholder="40.7128"
+        label="Latitude (Optional)"
+        placeholder="-37.3159"
         error={errors.address?.geo?.lat}
       />
       
       <FormField
         name="address.geo.lng"
         control={control}
-        label="Longitude"
-        placeholder="-74.0060"
+        label="Longitude (Optional)"
+        placeholder="81.1496"
         error={errors.address?.geo?.lng}
       />
     </div>
@@ -137,7 +136,7 @@ export const CompanySection: React.FC<UserFormSectionsProps> = ({
       name="company.name"
       control={control}
       label="Company Name"
-      placeholder="Acme Corp"
+      placeholder="Acme Corporation"
       error={errors.company?.name}
       required
     />
@@ -145,16 +144,16 @@ export const CompanySection: React.FC<UserFormSectionsProps> = ({
     <FormField
       name="company.catchPhrase"
       control={control}
-      label="Company Slogan"
-      placeholder="Making the world better"
+      label="Catch Phrase"
+      placeholder="Multi-layered client-server neural-net"
       error={errors.company?.catchPhrase}
     />
     
     <FormField
       name="company.bs"
       control={control}
-      label="Business Description"
-      placeholder="Technology solutions"
+      label="Business Focus"
+      placeholder="harness real-time e-markets"
       error={errors.company?.bs}
     />
   </FormSection>

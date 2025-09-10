@@ -1,3 +1,4 @@
+/* eslint-disable quotes */
 import { Post } from "./post.types";
 import { Control, FieldErrors } from 'react-hook-form';
 
@@ -57,6 +58,7 @@ export interface UserCardProps {
   user: UserType;
   postsCount: number;
   onDelete: (userId: number) => void;
+  onEdit: (user: UserType) => void;
 }
 
 export interface UsersGridProps {
@@ -83,3 +85,10 @@ export interface CreateUserModalProps {
   onClose: () => void;
   onUserCreated: (user: UserType) => void;
 }
+export interface EditUserModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  user: UserType;
+  onUserUpdated: (user: UserType) => void;
+}
+

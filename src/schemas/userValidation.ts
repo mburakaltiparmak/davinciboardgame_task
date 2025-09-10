@@ -3,7 +3,6 @@ import * as yup from 'yup';
 // Reusable validation patterns
 const PATTERNS = {
   username: /^[a-zA-Z0-9_]+$/,
-  phone: /^[\+]?[1-9][\d]{0,15}$/,
   zipcode: /^\d{5}(-\d{4})?$/,
   latitude: /^-?([1-8]?[1-9]|[1-9]0)\.{1}\d{1,6}$/,
   longitude: /^-?([1]?[0-7][1-9]|[1]?[1-8][0]|[1-9]?[0-9])\.{1}\d{1,6}$/
@@ -31,12 +30,11 @@ const commonFields = {
     
   phone: yup
     .string()
-    .required('Phone is required')
-    .matches(PATTERNS.phone, 'Please enter a valid phone number'),
+    .nullable()
+    .transform(value => value === '' ? null : value),
     
   website: yup
     .string()
-    .url('Please enter a valid website URL')
     .nullable()
     .transform(value => value === '' ? null : value),
     

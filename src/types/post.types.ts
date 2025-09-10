@@ -37,6 +37,7 @@ export interface PostCardProps {
   isExpanded: boolean;
   onToggleExpansion: (postId: number) => void;
   onDelete: (postId: number) => void;
+  onEdit: (post: Post) => void;  // Bu satır eklenecek
 }
 
 export interface PostsGridProps {
@@ -65,4 +66,11 @@ export interface CreatePostModalProps {
   isOpen: boolean;
   onClose: () => void;
   onPostCreated: (post: Post) => void;
+}
+
+export interface EditPostModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  post: Post;
+  onPostUpdated: (post: Post) => void;
 }
