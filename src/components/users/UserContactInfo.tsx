@@ -2,8 +2,6 @@ import React from 'react';
 import { Mail, Phone, Globe, MapPin, Building } from 'lucide-react';
 import { UserContactInfoProps } from '../../types/user.types';
 
-
-
 const UserContactInfo: React.FC<UserContactInfoProps> = ({
   user,
   isEditing,

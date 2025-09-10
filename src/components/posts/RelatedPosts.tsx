@@ -3,9 +3,6 @@ import { Link } from 'react-router-dom';
 import { FileText, Calendar, User } from 'lucide-react';
 import { RelatedPostsProps } from '../../types/post.types';
 
-
-
-
 const RelatedPosts: React.FC<RelatedPostsProps> = ({ posts, author }) => {
   if (posts.length === 0 || !author) return null;
 
