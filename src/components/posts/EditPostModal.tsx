@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { FileText, User, Save, X } from 'lucide-react';
-import Modal from '../common/Modal';
+import Modal from '../ui/Modal';
 import { EditPostModalProps, Post } from '../../types/post.types';
 import { UserType } from '../../types/user.types';
-import { updateData, fetchData } from '../../api/api';
+import { updateData, fetchData } from '../../services/api';
 
 const EditPostModal: React.FC<EditPostModalProps> = ({
   isOpen,

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { ArrowLeft, Edit, Trash2, Save, X, User } from 'lucide-react';
-import { fetchData, deleteData, updateData } from '../api/api';
+import { fetchData, deleteData, updateData } from '../services/api';
 import { UserType } from '../types/user.types';
 import { Post } from '../types/post.types';
-import UserProfileHeader from '../components/userDetail/UserProfileHeader';
-import UserPostsList from '../components/userDetail/UserPostsList';
-import DeleteConfirmModal from '../components/common/DeleteConfirmModal';
+import UserProfileHeader from '../components/users/UserProfileHeader';
+import UserPostsList from '../components/users/UserPostsList';
+import DeleteConfirmModal from '../components/ui/DeleteConfirmModal';
 import { useUserEditForm } from '../hooks/useUserForms';
-import { AddressSection, CompanySection, PersonalInfoSection } from '../components/userDetail/UserFormSections';
+import { AddressSection, CompanySection, PersonalInfoSection } from '../components/users/UserFormSections';
 
 const UsersDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();

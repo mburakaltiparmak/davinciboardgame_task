@@ -1,15 +1,15 @@
 /* eslint-disable quotes */
 import React, { useEffect, useState } from 'react';
 import { Plus } from 'lucide-react';
-import { fetchData, deleteData } from '../api/api';
+import { fetchData, deleteData } from '../services/api';
 import { Post } from '../types/post.types';
 import { UserType } from '../types/user.types';
-import PostsFilters from '../components/postDetail/PostsFilters';
-import PostsGrid from '../components/postDetail/PostsGrid';
-import Pagination from '../components/common/Pagination';
-import DeleteConfirmModal from '../components/common/DeleteConfirmModal';
-import CreatePostModal from '../components/postDetail/CreatePostModal';
-import EditPostModal from '../components/postDetail/EditPostModal';
+import PostsFilters from '../components/posts/PostsFilters';
+import PostsGrid from '../components/posts/PostsGrid';
+import Pagination from '../components/ui/Pagination';
+import DeleteConfirmModal from '../components/ui/DeleteConfirmModal';
+import CreatePostModal from '../components/posts/CreatePostModal';
+import EditPostModal from '../components/posts/EditPostModal';
 
 const PostsPage: React.FC = () => {
   const [posts, setPosts] = useState<Post[]>([]);

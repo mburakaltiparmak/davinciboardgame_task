@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, Home, User, Mail, X } from 'lucide-react';
-import logo from "../../assets/logo.webp";
+import logo from '../../assets/logo.webp';
 
 const Header: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);

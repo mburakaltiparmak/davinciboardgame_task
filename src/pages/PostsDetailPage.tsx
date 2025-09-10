@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { ArrowLeft, Edit, Trash2, Save, X, MessageCircle } from 'lucide-react';
-import { fetchData, deleteData, updateData } from '../api/api';
+import { fetchData, deleteData, updateData } from '../services/api';
 import { Post } from '../types/post.types';
 import { UserType } from '../types/user.types';
-import PostHeader from '../components/postDetail/PostHeader';
-import PostContent from '../components/postDetail/PostContent';
-import PostActions from '../components/postDetail/PostActions';
-import RelatedPosts from '../components/postDetail/RelatedPosts';
-import AuthorProfileCard from '../components/postDetail/AuthorProfileCard';
-import DeleteConfirmModal from '../components/common/DeleteConfirmModal';
+import PostHeader from '../components/posts/PostHeader';
+import PostContent from '../components/posts/PostContent';
+import PostActions from '../components/posts/PostActions';
+import RelatedPosts from '../components/posts/RelatedPosts';
+import AuthorProfileCard from '../components/posts/AuthorProfileCard';
+import DeleteConfirmModal from '../components/ui/DeleteConfirmModal';
 
 const PostsDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -241,7 +241,7 @@ const PostsDetailPage: React.FC = () => {
         message={`Are you sure you want to delete <strong>"${post.title}"</strong>? This action cannot be undone.`}
         onConfirm={handleDelete}
         onCancel={() => setDeleteConfirm(false)}
-        confirmText={actionLoading ? "Deleting..." : "Delete Post"}
+        confirmText={actionLoading ? 'Deleting...' : 'Delete Post'}
       />
     </div>
   );

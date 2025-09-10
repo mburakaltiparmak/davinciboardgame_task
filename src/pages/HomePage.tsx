@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Users, FileText, TrendingUp, Activity } from 'lucide-react';
-import { fetchData } from '../api/api';
+import { Users, FileText } from 'lucide-react';
+import { fetchData } from '../services/api';
 import { UserType } from '../types/user.types';
 import { Post } from '../types/post.types';
 
@@ -122,7 +122,7 @@ const HomePage: React.FC = () => {
                 <Link
                   key={post.id}
                   to={`/posts/${post.id}`}
-                  className="h-52 flex flex-col items-start justify-between border-2 border-red-500 bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-200 transform hover:-translate-y-1"
+                  className="h-52 flex flex-col items-start justify-between bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-200 transform hover:-translate-y-1"
                 >
                   <h3 className="text-lg font-semibold text-gray-900 mb-3 line-clamp-2">
                     {post.title}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Control, FieldErrors } from 'react-hook-form';
 import { User, Mail, Phone, Globe, MapPin, Building } from 'lucide-react';
-import { FormField, FormSection } from '../common/FormField';
+import { FormField, FormSection } from '../ui/FormField';
 import { UserType } from '../../types/user.types';
 
 interface UserFormSectionsProps {

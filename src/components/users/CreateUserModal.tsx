@@ -1,8 +1,8 @@
 import React from 'react';
-import Modal from '../common/Modal';
-import { FormActions } from '../common/FormField';
+import Modal from '../ui/Modal';
+import { FormActions } from '../ui/FormField';
 import { CreateUserModalProps, UserType } from '../../types/user.types';
-import { postData } from '../../api/api';
+import { postData } from '../../services/api';
 import { useUserCreateForm } from '../../hooks/useUserForms';
 import { AddressSection, CompanySection, PersonalInfoSection } from './UserFormSections';
 

@@ -1,15 +1,15 @@
 /* eslint-disable quotes */
 import React, { useEffect, useState } from 'react';
-import { fetchData, deleteData } from '../api/api';
+import { fetchData, deleteData } from '../services/api';
 import { UserType } from '../types/user.types';
 import { Post } from '../types/post.types';
-import UsersHeader from '../components/userDetail/UsersHeader';
-import UsersFilters from '../components/userDetail/UsersFilter';
-import UsersGrid from '../components/userDetail/UsersGrid';
-import Pagination from '../components/common/Pagination';
-import DeleteConfirmModal from '../components/common/DeleteConfirmModal';
-import CreateUserModal from '../components/userDetail/CreateUserModal';
-import EditUserModal from '../components/userDetail/EditUserModal';
+import UsersHeader from '../components/users/UsersHeader';
+import UsersFilters from '../components/users/UsersFilter';
+import UsersGrid from '../components/users/UsersGrid';
+import Pagination from '../components/ui/Pagination';
+import DeleteConfirmModal from '../components/ui/DeleteConfirmModal';
+import CreateUserModal from '../components/users/CreateUserModal';
+import EditUserModal from '../components/users/EditUserModal';
 
 const UsersPage: React.FC = () => {
   const [users, setUsers] = useState<UserType[]>([]);
